@@ -1,0 +1,45 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: app-lavitrinacoleccionistas-api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          httpclient:
+            connect-timeout: 3000
+            response-timeout: 10s
+          default-filters:
+            - AddRequestHeader=X-Gateway, lavitrina
+            - AddResponseHeader=X-Gateway, lavitrina
+          routes:
+            - id: intercambios-soporte
+              uri: lb://app-lavitrinacoleccionistas-ms-intercambios-soporte
+              predicates:
+                - Path=/api/intercambios/**,/api/tickets-soporte/**
+            - id: intercambios-docs
+              uri: lb://app-lavitrinacoleccionistas-ms-intercambios-soporte
+              predicates:
+                - Path=/docs/intercambios/v3/api-docs
+              filters:
+                - RewritePath=/docs/intercambios/(?<p>.*), /api/$\{p}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: Intercambios y Soporte
+        url: /docs/intercambios/v3/api-docs
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
