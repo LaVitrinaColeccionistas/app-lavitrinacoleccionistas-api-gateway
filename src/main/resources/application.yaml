@@ -15,6 +15,18 @@ spring:
             - AddRequestHeader=X-Gateway, lavitrina
             - AddResponseHeader=X-Gateway, lavitrina
           routes:
+            # Rutas de catalogo
+            - id: catalogo
+              uri: lb://app-lavitrinacoleccionistas-ms-catalogo
+              predicates:
+                - Path=/api/productos/**,/api/publicaciones/**,/api/ofertas/**
+            - id: catalogo-docs
+              uri: lb://app-lavitrinacoleccionistas-ms-catalogo
+              predicates:
+                - Path=/docs/catalogo/v3/api-docs
+              filters:
+                - RewritePath=/docs/catalogo/(?<p>.*), /api/$\{p}
+            #Rutas de intercambio
             - id: intercambios-soporte
               uri: lb://app-lavitrinacoleccionistas-ms-intercambios-soporte
               predicates:
@@ -40,6 +52,8 @@ springdoc:
     urls:
       - name: Intercambios y Soporte
         url: /docs/intercambios/v3/api-docs
+      - name: Catalogo
+        url: /docs/catalogo/v3/api-docs
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
