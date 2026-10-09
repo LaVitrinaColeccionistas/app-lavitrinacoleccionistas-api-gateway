@@ -56,4 +56,4 @@ springdoc:
         url: /docs/catalogo/v3/api-docs
 logging:
   level:
-    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.gateway: INFO
