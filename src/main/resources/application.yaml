@@ -37,6 +37,17 @@ spring:
                 - Path=/docs/intercambios/v3/api-docs
               filters:
                 - RewritePath=/docs/intercambios/(?<p>.*), /api/$\{p}
+            #Rutas de compras y usuarios
+            - id: compras
+              uri: lb://app-lavitrinacoleccionistas-ms-compras
+              predicates:
+                - Path=/api/ordenes/**,/api/usuarios/**,/api/perfiles/**,/api/roles/**
+            - id: compras-docs
+              uri: lb://app-lavitrinacoleccionistas-ms-compras
+              predicates:
+                - Path=/docs/compras/v3/api-docs
+              filters:
+                - RewritePath=/docs/compras/(?<p>.*), /api/$\{p}
 
 eureka:
   client:
@@ -54,6 +65,8 @@ springdoc:
         url: /docs/intercambios/v3/api-docs
       - name: Catalogo
         url: /docs/catalogo/v3/api-docs
+      - name: Compras y Usuarios
+        url: /docs/compras/v3/api-docs
 logging:
   level:
     org.springframework.cloud.gateway: INFO
