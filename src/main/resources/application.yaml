@@ -21,7 +21,7 @@ spring:
             - id: seguridad
               uri: lb://app-lavitrinacoleccionistas-ms-seguridad
               predicates:
-                - Path=/api/auth/**
+                - Path=/api/auth/**,/api/usuarios/**,/api/roles/**
             # Rutas de catalogo
             - id: catalogo
               uri: lb://app-lavitrinacoleccionistas-ms-catalogo
@@ -48,7 +48,8 @@ spring:
             - id: compras
               uri: lb://app-lavitrinacoleccionistas-ms-compras
               predicates:
-                - Path=/api/ordenes/**,/api/usuarios/**,/api/perfiles/**,/api/roles/**
+                - Path=/api/ordenes/**,/api/perfiles/**
+                #- Path=/api/ordenes/**,/api/usuarios/**,/api/perfiles/**,/api/roles/**
             - id: compras-docs
               uri: lb://app-lavitrinacoleccionistas-ms-compras
               predicates:
