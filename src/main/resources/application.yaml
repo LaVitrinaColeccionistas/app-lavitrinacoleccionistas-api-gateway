@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: app-lavitrinacoleccionistas-api-gateway
+  config:
+    import: optional:file:.env[.properties]
   cloud:
     gateway:
       server:
@@ -15,6 +17,11 @@ spring:
             - AddRequestHeader=X-Gateway, lavitrina
             - AddResponseHeader=X-Gateway, lavitrina
           routes:
+            # Rutas de seguridad
+            - id: seguridad
+              uri: lb://app-lavitrinacoleccionistas-ms-seguridad
+              predicates:
+                - Path=/api/auth/**
             # Rutas de catalogo
             - id: catalogo
               uri: lb://app-lavitrinacoleccionistas-ms-catalogo
@@ -49,6 +56,7 @@ spring:
               filters:
                 - RewritePath=/docs/compras/(?<p>.*), /api/$\{p}
 
+
 eureka:
   client:
     service-url:
@@ -70,3 +78,9 @@ springdoc:
 logging:
   level:
     org.springframework.cloud.gateway: INFO
+
+app:
+  security:
+    jwt:
+      secret: ${JWT_SECRET}
+      issuer: ${JWT_ISSUER:lvc-auth}
