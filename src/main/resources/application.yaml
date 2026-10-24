@@ -44,12 +44,11 @@ spring:
                 - Path=/docs/intercambios/v3/api-docs
               filters:
                 - RewritePath=/docs/intercambios/(?<p>.*), /api/$\{p}
-            #Rutas de compras y usuarios
+            #Rutas de compras
             - id: compras
               uri: lb://app-lavitrinacoleccionistas-ms-compras
               predicates:
-                - Path=/api/ordenes/**,/api/perfiles/**
-                #- Path=/api/ordenes/**,/api/usuarios/**,/api/perfiles/**,/api/roles/**
+                - Path=/api/ordenes/**,/api/reclamos/**
             - id: compras-docs
               uri: lb://app-lavitrinacoleccionistas-ms-compras
               predicates:
@@ -74,7 +73,7 @@ springdoc:
         url: /docs/intercambios/v3/api-docs
       - name: Catalogo
         url: /docs/catalogo/v3/api-docs
-      - name: Compras y Usuarios
+      - name: Compras
         url: /docs/compras/v3/api-docs
 logging:
   level:
