@@ -22,6 +22,12 @@ spring:
               uri: lb://app-lavitrinacoleccionistas-ms-seguridad
               predicates:
                 - Path=/api/auth/**,/api/usuarios/**,/api/roles/**
+            - id: seguridad-docs
+              uri: lb://app-lavitrinacoleccionistas-ms-seguridad
+              predicates:
+                - Path=/docs/seguridad/v3/api-docs
+              filters:
+                - RewritePath=/docs/seguridad/(?<p>.*), /api/$\{p}
             # Rutas de catalogo
             - id: catalogo
               uri: lb://app-lavitrinacoleccionistas-ms-catalogo
@@ -69,6 +75,8 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     urls:
+      - name: Seguridad
+        url: /docs/seguridad/v3/api-docs
       - name: Intercambios y Soporte
         url: /docs/intercambios/v3/api-docs
       - name: Catalogo
