@@ -27,6 +27,7 @@ spring:
                   - PUT
                   - PATCH
                   - DELETE
+                  - OPTIONS
                 allowedHeaders:
                   - "*"
           routes:
