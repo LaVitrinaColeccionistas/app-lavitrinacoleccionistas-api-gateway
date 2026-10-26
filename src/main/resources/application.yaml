@@ -16,6 +16,19 @@ spring:
           default-filters:
             - AddRequestHeader=X-Gateway, lavitrina
             - AddResponseHeader=X-Gateway, lavitrina
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowedOrigins:
+                  - "http://localhost:5173"
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                  - OPTIONS
+                allowedHeaders:
+                  - "*"
           routes:
             # Rutas de seguridad
             - id: seguridad
@@ -86,6 +99,7 @@ springdoc:
 logging:
   level:
     org.springframework.cloud.gateway: INFO
+
 
 app:
   security:
