@@ -80,6 +80,9 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.PUT, "/api/ofertas/*").hasAnyRole("ADMIN", "COMPRADOR")
                         .pathMatchers(HttpMethod.GET, "/api/ofertas/**").hasAnyRole("ADMIN", "VENDEDOR", "COMPRADOR")
 
+                        .pathMatchers(HttpMethod.GET, "/api/usuarios/nombres")
+                        .hasAnyRole("ADMIN", "COMPRADOR", "VENDEDOR")
+
                         .pathMatchers("/api/usuarios/**", "/api/roles/**").hasRole("ADMIN")
                         .anyExchange().authenticated()
                 )
