@@ -69,11 +69,13 @@ public class SecurityConfig {
                         // Catalogo publico
                         .pathMatchers(HttpMethod.GET, "/api/productos/**", "/api/publicaciones/**").permitAll()
 
-                        // Productos y publicaciones
+                        // Productos
                         .pathMatchers(HttpMethod.DELETE, "/api/productos/**").hasRole("ADMIN")
-                        .pathMatchers("/api/productos/**", "/api/publicaciones/**").hasAnyRole("ADMIN", "VENDEDOR")
+                        .pathMatchers("/api/productos/**").hasAnyRole("ADMIN", "VENDEDOR", "COMPRADOR")
+                        // Publicaciones
+                        .pathMatchers("/api/publicaciones/**").hasAnyRole("ADMIN", "VENDEDOR")
 
-                        // Ofertas
+                                // Ofertas
                         .pathMatchers(HttpMethod.POST, "/api/ofertas/*/aceptar", "/api/ofertas/*/rechazar")
                         .hasAnyRole("ADMIN", "VENDEDOR")
                         .pathMatchers(HttpMethod.POST, "/api/ofertas").hasAnyRole("ADMIN", "COMPRADOR")
